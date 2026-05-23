@@ -134,8 +134,22 @@ public class AuthService {
     json.put("alias", row.getString("alias"));
     json.put("role", row.getString("role"));
     json.put("currentMood", row.getString("current_mood") != null ? row.getString("current_mood") : "Meditative");
-    json.put("isAvailable", row.getInteger("is_available") != null && row.getInteger("is_available") == 1);
-    json.put("totalSoulsHelped", row.getInteger("total_souls_helped") != null ? row.getInteger("total_souls_helped") : 0);
+    Object isAvailableObj = row.getValue("is_available");
+    if (isAvailableObj instanceof Boolean) {
+      json.put("isAvailable", (Boolean) isAvailableObj);
+    } else if (isAvailableObj instanceof Integer) {
+      json.put("isAvailable", ((Integer) isAvailableObj) == 1);
+    } else {
+      json.put("isAvailable", false);
+    }
+
+    Object totalSoulsObj = row.getValue("total_souls_helped");
+    if (totalSoulsObj instanceof Integer) {
+      json.put("totalSoulsHelped", (Integer) totalSoulsObj);
+    } else {
+      json.put("totalSoulsHelped", 0);
+    }
+
     json.put("avatarUrl", row.getString("avatar_url"));
     return json;
   }
