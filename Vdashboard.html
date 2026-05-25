@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negeyachin - Volunteer Dashboard</title>
+    <link rel="stylesheet" href="css/Vdashboard.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-left">
+        <h1>Negeyachin</h1>
+    </div>
+    <div class="nav-center">
+        <a href="home.html">Home</a>
+        <a href="#" class="disabled">Listen</a>
+        <a href="#" class="disabled">Breathe</a>
+        <a href="profile.html">Profile</a>
+    </div>
+    <div class="nav-right">
+        <span class="icon-btn">🔔</span>
+        <span class="icon-btn">⚙️</span>
+    </div>
+</nav>
+
+<main class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Someone may need you today.</h1>
+        <p>Your presence is a quiet sanctuary. <span id="soulsCount">Four</span> souls are currently seeking a listening ear.</p>
+    </div>
+
+    <div class="availability-area">
+        <div class="availability-label">Availability</div>
+        <div class="availability-toggle" id="availabilityToggle">
+            <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+            </div>
+            <span class="toggle-text">ONLINE</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Waiting Support -->
+        <div class="column">
+            <div class="column-header">
+                <h2>Waiting Support</h2>
+                <span class="badge" id="waitingCount">4 Active</span>
+            </div>
+            <div class="support-list" id="waitingList">
+                <!-- Support request cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Active Conversations -->
+        <div class="column">
+            <div class="column-header">
+                <h2>Active Conversations</h2>
+            </div>
+            <div class="conversation-list" id="activeConversations">
+                <!-- Active conversation cards will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Ripple Effect -->
+    <div class="ripple-section">
+        <h2>The Ripple Effect</h2>
+        <div class="ripple-content">
+            <div class="ripple-text">
+                <p>Every minute of your stillness shared with another creates a safer digital world. Today, you have supported <strong id="soulsHelped">12</strong> souls through their shadows.</p>
+            </div>
+            <div class="ripple-visual">
+                <div class="ripple-circle"></div>
+                <div class="ripple-stats">
+                    <span class="big-number" id="globalListeners">1,240</span>
+                    <span class="stats-label">GLOBAL LISTENERS ACTIVE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/Vdashboard.js"></script>
+</body>
+</html>
