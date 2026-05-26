@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Negeyachin — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0d0e10;
+      --bg-surface:   #111316;
+      --bg-card:      #161820;
+      --bg-card-h:    #1b1d26;
+      --bg-input:     #1a1c23;
+      --border:       rgba(255,255,255,0.07);
+      --border-md:    rgba(255,255,255,0.1);
+      --text:         #e2e4ea;
+      --text-sub:     #8a8f9e;
+      --text-muted:   #4e5363;
+      --accent:       #d4edba;
+      --accent-text:  #1a2e0f;
+      --blue:         #5294ff;
+      --blue-dim:     rgba(82,148,255,0.1);
+      --green:        #4dba7f;
+      --green-dim:    rgba(77,186,127,0.1);
+      --amber:        #f0a04b;
+      --amber-dim:    rgba(240,160,75,0.1);
+      --red:          #e05c5c;
+      --red-dim:      rgba(224,92,92,0.1);
+      --nav-h:        52px;
+      --sidebar-w:    0px;
+      --font-serif:   'DM Serif Display', Georgia, serif;
+      --font-sans:    'DM Sans', system-ui, sans-serif;
+      --ease:         cubic-bezier(0.4,0,0.2,1);
+      --radius:       12px;
+      --radius-sm:    8px;
+      --radius-xs:    6px;
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════════════════ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 0;
+    }
+    .nav-brand {
+      font-size: 15px; font-weight: 500;
+      letter-spacing: 0.2px; color: var(--text);
+      margin-right: 40px; flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 2px; flex: 1;
+    }
+    .nav-link {
+      padding: 6px 14px; border-radius: var(--radius-xs);
+      font-size: 13px; color: var(--text-sub);
+      cursor: pointer; border: none; background: none;
+      font-family: var(--font-sans);
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-link.active { color: var(--text); font-weight: 500; }
+    .nav-actions {
+      display: flex; align-items: center; gap: 10px; margin-left: auto;
+    }
+    .nav-icon-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg-card);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-sub); font-size: 14px;
+      transition: all 0.15s; position: relative;
+    }
+    .nav-icon-btn:hover { border-color: var(--border-md); color: var(--text); }
+    .notif-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); border: 1px solid var(--bg-surface);
+    }
+    .nav-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, #2a4a20, #1a3015);
+      border: 1px solid rgba(77,186,127,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500; color: var(--accent);
+      cursor: pointer; flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       MAIN LAYOUT
+    ══════════════════════════════════════════════════════ */
+    .main {
+      padding-top: var(--nav-h);
+      padding-left: 28px;
+      padding-right: 28px;
+      padding-bottom: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       PAGE HEADER
+    ══════════════════════════════════════════════════════ */
+    .page-header {
+      padding: 32px 0 24px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: 32px; font-weight: 400;
+      color: var(--text); line-height: 1.1;
+    }
+    .page-sub {
+      font-size: 12.5px; color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .live-badge {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11.5px; color: var(--text-sub);
+      padding: 6px 12px; border-radius: var(--radius-xs);
+      background: var(--bg-card); border: 1px solid var(--border);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       STAT CARDS
+    ══════════════════════════════════════════════════════ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.5s var(--ease) both;
+    }
+    .stat-card:nth-child(2) { animation-delay: 0.07s; }
+    .stat-card:nth-child(3) { animation-delay: 0.14s; }
+    .stat-card-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .stat-icon {
+      width: 30px; height: 30px; border-radius: var(--radius-xs);
+      background: var(--bg-input);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--text-sub);
+    }
+    .stat-badge {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .stat-badge.stable { background: var(--green-dim); color: var(--green); }
+    .stat-badge.active { background: var(--blue-dim);  color: var(--blue);  }
+    .stat-badge.amber  { background: var(--amber-dim); color: var(--amber); }
+    .stat-value {
+      font-size: 34px; font-weight: 300; letter-spacing: -1px;
+      color: var(--text); line-height: 1; margin-bottom: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      font-size: 10.5px; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .stat-change {
+      position: absolute; top: 20px; right: 70px;
+      font-size: 11px; color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 7px; border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION HEADING
+    ══════════════════════════════════════════════════════ */
+    .section-heading {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; color: var(--text);
+      margin-bottom: 14px;
+    }
+    .section-heading .dot-red {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+      animation: pulse 1.5s ease infinite;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       EMERGENCY MONITORING
+    ══════════════════════════════════════════════════════ */
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .emergency-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      animation: fadeUp 0.5s 0.2s var(--ease) both;
+      transition: border-color 0.18s;
+    }
+    .emergency-card:nth-child(2) { animation-delay: 0.27s; }
+    .emergency-card:nth-child(3) { animation-delay: 0.34s; }
+    .emergency-card.risk-high   { border-color: rgba(224,92,92,0.2); }
+    .emergency-card.risk-medium { border-color: rgba(240,160,75,0.15); }
+    .emergency-card-top {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 10px;
+    }
+    .emergency-user {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .emergency-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--bg-input); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--text-sub); flex-shrink: 0;
+    }
+    .emergency-alias {
+      font-size: 13px; font-weight: 500; color: var(--text);
+    }
+    .risk-badge {
+      font-size: 10px; font-weight: 500; padding: 3px 9px;
+      border-radius: 999px; letter-spacing: 0.2px;
+    }
+    .risk-badge.high   { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(224,92,92,0.2); }
+    .risk-badge.medium { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(240,160,75,0.2); }
+    .risk-badge.low    { background: var(--green-dim); color: var(--green); border: 1px solid rgba(77,186,127,0.2); }
+    .emergency-content {
+      font-size: 12.5px; color: var(--text-sub);
+      line-height: 1.65; margin-bottom: 14px;
+      font-style: italic;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .emergency-actions {
+      display: flex; gap: 8px;
+    }
+    .btn-sm {
+      padding: 6px 13px; border-radius: var(--radius-xs);
+      font-size: 11.5px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--border); background: var(--bg-input);
+      color: var(--text-sub); font-family: var(--font-sans);
+      transition: all 0.15s;
+    }
+    .btn-sm:hover { background: var(--bg-card-h); color: var(--text); border-color: var(--border-md); }
+    .btn-sm.primary {
+      background: var(--blue-dim); color: var(--blue);
+      border-color: rgba(82,148,255,0.2);
+    }
+    .btn-sm.primary:hover { background: rgba(82,148,255,0.18); }
+    .view-history {
+      font-size: 12px; color: var(--blue); cursor: pointer;
+      margin-top: 8px; display: inline-block;
+    }
+    .view-history:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════════════════════════
+       BOTTOM GRID (Community Members)
+    ══════════════════════════════════════════════════════ */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 14px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       COMMUNITY MEMBERS PANEL
+    ══════════════════════════════════════════════════════ */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeUp 0.5s 0.35s var(--ease) both;
+    }
+    .panel-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-title { font-size: 14px; font-weight: 500; }
+    .panel-controls { display: flex; gap: 8px; align-items: center; }
+    .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: var(--radius-xs); padding: 7px 11px;
+      transition: border-color 0.15s;
+    }
+    .search-box:focus-within { border-color: rgba(82,148,255,0.4); }
+    .search-box input {
+      background: none; border: none; outline: none;
+      font-family: var(--font-sans); font-size: 12.5px;
+      color: var(--text); width: 140px;
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .search-icon { color: var(--text-muted); font-size: 13px; }
+    .filter-btn {
+      width: 30px; height: 30px; border-radius: var(--radius-xs);
+      background: var(--bg-input); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-sub); font-size: 13px;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--border-md); color: var(--text); }
+
+    /* Filter bar */
+    .filter-bar {
+      display: none; gap: 8px; padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+      flex-wrap: wrap; align-items: center;
+    }
+    .filter-bar.open { display: flex; }
+    .filter-select {
+      padding: 5px 10px; border-radius: var(--radius-xs);
+      background: var(--bg-input); border: 1px solid var(--border);
+      color: var(--text-sub); font-family: var(--font-sans);
+      font-size: 12px; outline: none; cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .filter-select:focus { border-color: rgba(82,148,255,0.4); color: var(--text); }
+    .filter-clear {
+      font-size: 11.5px; color: var(--text-muted); cursor: pointer;
+      padding: 5px 8px; transition: color 0.15s;
+    }
+    .filter-clear:hover { color: var(--text-sub); }
+
+    /* Table */
+    .members-table { width: 100%; border-collapse: collapse; }
+    .members-table th {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-muted);
+      padding: 10px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .members-table td {
+      padding: 11px 16px; font-size: 12.5px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      vertical-align: middle;
+    }
+    .members-table tbody tr { transition: background 0.15s; }
+    .members-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .members-table tbody tr:last-child td { border-bottom: none; }
+
+    .member-cell { display: flex; align-items: center; gap: 9px; }
+    .member-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9.5px; font-weight: 500; flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .member-name { font-size: 12.5px; color: var(--text); font-weight: 400; }
+
+    .role-pill {
+      display: inline-flex; align-items: center;
+      font-size: 11px; padding: 3px 9px; border-radius: 999px;
+    }
+    .role-pill.volunteer { background: var(--blue-dim);  color: var(--blue);  }
+    .role-pill.admin     { background: var(--amber-dim); color: var(--amber); }
+    .role-pill.user      { background: rgba(255,255,255,0.05); color: var(--text-sub); }
+
+    .status-cell { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .sdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .sdot.online    { background: var(--green); box-shadow: 0 0 5px var(--green); }
+    .sdot.away      { background: var(--amber); }
+    .sdot.offline   { background: var(--text-muted); }
+    .sdot.suspended { background: var(--red); }
+
+    .joined-date { font-size: 11.5px; color: var(--text-sub); }
+
+    /* Actions dropdown */
+    .actions-wrap { position: relative; }
+    .actions-btn {
+      width: 26px; height: 26px; border-radius: var(--radius-xs);
+      background: none; border: 1px solid transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-muted); font-size: 15px;
+      transition: all 0.15s; line-height: 1;
+    }
+    .actions-btn:hover {
+      background: var(--bg-input); border-color: var(--border);
+      color: var(--text-sub);
+    }
+    .dropdown {
+      position: absolute; right: 0; top: calc(100% + 6px);
+      background: var(--bg-card-h); border: 1px solid var(--border-md);
+      border-radius: var(--radius-sm); padding: 5px;
+      min-width: 172px; z-index: 50;
+      display: none;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      animation: dropIn 0.15s var(--ease);
+    }
+    .dropdown.open { display: block; }
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .dd-item {
+      padding: 8px 12px; border-radius: var(--radius-xs);
+      font-size: 12.5px; color: var(--text-sub); cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .dd-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .dd-item.danger { color: var(--red); }
+    .dd-item.danger:hover { background: var(--red-dim); color: var(--red); }
+    .dd-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* Pagination */
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; border-top: 1px solid var(--border);
+    }
+    .pagination-info { font-size: 11.5px; color: var(--text-muted); }
+    .pagination-btns { display: flex; gap: 4px; }
+    .pg-btn {
+      width: 28px; height: 28px; border-radius: var(--radius-xs);
+      background: var(--bg-input); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 11.5px; color: var(--text-sub);
+      font-family: var(--font-sans); transition: all 0.15s;
+    }
+    .pg-btn:hover:not(:disabled) { border-color: var(--border-md); color: var(--text); }
+    .pg-btn.active { background: var(--blue-dim); border-color: rgba(82,148,255,0.3); color: var(--blue); }
+    .pg-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .view-all-link {
+      display: block; text-align: center;
+      padding: 11px 20px; border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-muted); cursor: pointer;
+      transition: color 0.15s;
+    }
+    .view-all-link:hover { color: var(--text-sub); }
+
+    /* ══════════════════════════════════════════════════════
+       FLAGGED ITEMS PANEL
+    ══════════════════════════════════════════════════════ */
+    .flagged-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeUp 0.5s 0.28s var(--ease) both;
+    }
+    .flagged-list { padding: 8px 0; }
+    .flagged-item {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      transition: background 0.15s;
+      cursor: default;
+    }
+    .flagged-item:last-child { border-bottom: none; }
+    .flagged-item:hover { background: rgba(255,255,255,0.02); }
+    .flagged-tag {
+      font-size: 9.5px; font-weight: 500; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 5px; display: flex; justify-content: space-between;
+    }
+    .flagged-tag .time { font-weight: 400; letter-spacing: 0; }
+    .flagged-desc {
+      font-size: 12.5px; color: var(--text-sub);
+      line-height: 1.55; margin-bottom: 8px;
+    }
+    .flagged-actions { display: flex; gap: 8px; }
+    .flagged-btn {
+      font-size: 11px; color: var(--text-muted); cursor: pointer;
+      background: none; border: none; font-family: var(--font-sans);
+      padding: 0; transition: color 0.15s;
+    }
+    .flagged-btn:hover { color: var(--text-sub); }
+    .flagged-btn.remove { color: var(--red-dim); }
+    .flagged-btn.remove:hover { color: var(--red); }
+
+    /* ══════════════════════════════════════════════════════
+       MODAL
+    ══════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg-card); border: 1px solid var(--border-md);
+      border-radius: var(--radius); padding: 28px 32px;
+      width: 100%; max-width: 460px;
+      animation: modalIn 0.22s var(--ease);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0); }
+    }
+    .modal-title { font-size: 17px; font-weight: 500; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-sub); margin-bottom: 24px; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .btn-modal {
+      padding: 9px 20px; border-radius: var(--radius-xs);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font-sans); transition: all 0.15s;
+    }
+    .btn-modal.cancel {
+      background: var(--bg-input); color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+    .btn-modal.cancel:hover { color: var(--text); border-color: var(--border-md); }
+    .btn-modal.confirm {
+      background: var(--blue-dim); color: var(--blue);
+      border: 1px solid rgba(82,148,255,0.3);
+    }
+    .btn-modal.confirm:hover { background: rgba(82,148,255,0.18); }
+    .btn-modal.danger-confirm {
+      background: var(--red-dim); color: var(--red);
+      border: 1px solid rgba(224,92,92,0.3);
+    }
+    .btn-modal.danger-confirm:hover { background: rgba(224,92,92,0.18); }
+
+    /* Role select in modal */
+    .modal-select {
+      width: 100%; padding: 10px 14px;
+      background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: var(--radius-xs); color: var(--text);
+      font-family: var(--font-sans); font-size: 13.5px; outline: none;
+      margin-bottom: 22px; cursor: pointer;
+    }
+    .modal-select:focus { border-color: rgba(82,148,255,0.4); }
+
+    /* Activity modal */
+    .activity-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 20px;
+    }
+    .activity-stat {
+      background: var(--bg-input); border-radius: var(--radius-xs);
+      padding: 12px 14px;
+    }
+    .activity-stat-val {
+      font-size: 22px; font-weight: 300; letter-spacing: -0.5px;
+      color: var(--text); margin-bottom: 3px;
+    }
+    .activity-stat-lbl {
+      font-size: 10.5px; color: var(--text-muted);
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .activity-info { margin-bottom: 16px; }
+    .activity-row {
+      display: flex; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      font-size: 12.5px;
+    }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-row-lbl { color: var(--text-muted); }
+    .activity-row-val { color: var(--text); }
+
+    /* ══════════════════════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════════════════════ */
+    #toast-wrap {
+      position: fixed; bottom: 24px; right: 24px;
+      display: flex; flex-direction: column; gap: 8px; z-index: 999;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--bg-card-h); border: 1px solid var(--border-md);
+      border-radius: var(--radius-sm); padding: 11px 16px;
+      font-size: 13px; color: var(--text);
+      animation: slideUp 0.2s var(--ease);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      max-width: 300px;
+    }
+    .toast.success { border-color: rgba(77,186,127,0.35); }
+    .toast.error   { border-color: rgba(224,92,92,0.35);  }
+    @keyframes slideUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SKELETON LOADER
+    ══════════════════════════════════════════════════════ */
+    .skeleton {
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 25%,
+        rgba(255,255,255,0.08) 50%,
+        rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 4px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* ══════════════════════════════════════════════════════
+       EMPTY STATE
+    ══════════════════════════════════════════════════════ */
+    .empty-state {
+      padding: 40px 20px; text-align: center;
+      color: var(--text-muted); font-size: 13px;
+    }
+    .empty-state .icon { font-size: 28px; margin-bottom: 10px; opacity: 0.5; }
+
+    /* ══════════════════════════════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SPINNER
+    ══════════════════════════════════════════════════════ */
+    .spin {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.08);
+      border-top-color: var(--blue);
+      animation: rotate 0.65s linear infinite;
+      display: inline-block;
+    }
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    /* ══════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+      .emergency-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .main { padding-left: 14px; padding-right: 14px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <span class="nav-brand">Negeyachin</span>
+  <div class="nav-links">
+    <button class="nav-link" onclick="navTo('home')">Home</button>
+    <button class="nav-link" onclick="navTo('listen')">Listen</button>
+    <button class="nav-link" onclick="navTo('breathe')">Breathe</button>
+    <button class="nav-link active">Profile</button>
+  </div>
+  <div class="nav-actions">
+    <div class="nav-icon-btn" title="Notifications">
+      &#9711;
+      <span class="notif-dot"></span>
+    </div>
+    <div class="nav-icon-btn" title="Settings">&#9881;</div>
+    <div class="nav-avatar" id="nav-avatar" title="Account" onclick="signOut()">A</div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">System Overview</h1>
+      <p class="page-sub">Real-time status of the Solace ecosystem.</p>
+    </div>
+    <div class="live-badge">
+      <span class="live-dot"></span>
+      LIVE UPDATES · <span id="live-time">--:-- --</span>
+    </div>
+  </div>
+
+  <!-- ── Stat Cards ──────────────────────────────────────── -->
+  <div class="stats-grid" id="stats-grid">
+    <!-- Skeleton -->
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128100;</div>
+        <div class="skeleton" style="width:40px;height:18px;border-radius:999px"></div>
+      </div>
+      <div class="skeleton" style="width:80px;height:34px;margin-bottom:8px"></div>
+      <div class="skeleton" style="width:90px;height:10px"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128119;</div>
+        <div class="skeleton" style="width:52px;height:18px;border-radius:999px"></div>
+      </div>
+      <div class="skeleton" style="width:60px;height:34px;margin-bottom:8px"></div>
+      <div class="skeleton" style="width:110px;height:10px"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128172;</div>
+        <div class="skeleton" style="width:46px;height:18px;border-radius:999px"></div>
+      </div>
+      <div class="skeleton" style="width:70px;height:34px;margin-bottom:8px"></div>
+      <div class="skeleton" style="width:120px;height:10px"></div>
+    </div>
+  </div>
+
+  <!-- ── Emergency Monitoring ───────────────────────────── -->
+  <div class="section-heading">
+    Emergency Monitoring
+    <span class="dot-red"></span>
+  </div>
+  <div class="emergency-grid" id="emergency-grid">
+    <div class="stat-card">
+      <div class="skeleton" style="width:100%;height:90px;border-radius:8px"></div>
+    </div>
+    <div class="stat-card">
+      <div class="skeleton" style="width:100%;height:90px;border-radius:8px"></div>
+    </div>
+  </div>
+
+  <!-- ── Bottom Grid ─────────────────────────────────────── -->
+  <div class="bottom-grid">
+
+    <!-- Flagged Items -->
+    <div class="flagged-panel">
+      <div class="panel-header">
+        <span class="panel-title">Flagged Items</span>
+      </div>
+      <div class="flagged-list" id="flagged-list">
+        <div class="flagged-item">
+          <div class="skeleton" style="width:70%;height:10px;margin-bottom:8px"></div>
+          <div class="skeleton" style="width:90%;height:32px;border-radius:6px"></div>
+        </div>
+        <div class="flagged-item">
+          <div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div>
+          <div class="skeleton" style="width:85%;height:32px;border-radius:6px"></div>
+        </div>
+        <div class="flagged-item">
+          <div class="skeleton" style="width:75%;height:10px;margin-bottom:8px"></div>
+          <div class="skeleton" style="width:88%;height:32px;border-radius:6px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Members -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Community Members</span>
+        <div class="panel-controls">
+          <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" id="member-search" placeholder="Search members..." />
+          </div>
+          <div class="filter-btn" id="filter-toggle-btn" title="Filter" onclick="toggleFilterBar()">&#9776;</div>
+        </div>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filter-bar">
+        <select class="filter-select" id="filter-role" onchange="applyFilters()">
+          <option value="">All Roles</option>
+          <option value="user">User</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="admin">Admin</option>
+        </select>
+        <select class="filter-select" id="filter-status" onchange="applyFilters()">
+          <option value="">All Status</option>
+          <option value="true">Active</option>
+          <option value="false">Suspended</option>
+        </select>
+        <select class="filter-select" id="filter-sort" onchange="applyFilters()">
+          <option value="created_at">Joined Date</option>
+          <option value="email">Email</option>
+          <option value="role">Role</option>
+          <option value="last_login_at">Last Login</option>
+        </select>
+        <span class="filter-clear" onclick="clearFilters()">Clear filters</span>
+      </div>
+
+      <!-- Table -->
+      <div id="members-table-wrap">
+        <table class="members-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="members-tbody">
+            <tr><td colspan="5">
+              <div style="padding:16px 0">
+                <div class="skeleton" style="width:100%;height:36px;border-radius:6px;margin-bottom:8px"></div>
+                <div class="skeleton" style="width:100%;height:36px;border-radius:6px;margin-bottom:8px"></div>
+                <div class="skeleton" style="width:100%;height:36px;border-radius:6px"></div>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <span class="pagination-info" id="pg-info">Loading…</span>
+        <div class="pagination-btns" id="pg-btns"></div>
+      </div>
+
+      <span class="view-all-link" id="view-all-link">View all members</span>
+    </div>
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════════ -->
+
+<!-- Confirm action modal -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal">
+    <h3 class="modal-title" id="modal-title">Confirm Action</h3>
+    <p class="modal-sub"   id="modal-body">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn-modal cancel" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn-modal confirm" id="modal-confirm-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Adjust role modal -->
+<div class="modal-overlay" id="modal-role">
+  <div class="modal">
+    <h3 class="modal-title">Adjust Role</h3>
+    <p class="modal-sub">Select a new role for this member.</p>
+    <select class="modal-select" id="role-select">
+      <option value="user">User (Soul)</option>
+      <option value="volunteer">Volunteer (Guide)</option>
+      <option value="admin">Admin</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-modal cancel" onclick="closeModal('modal-role')">Cancel</button>
+      <button class="btn-modal confirm" onclick="confirmAdjustRole()">Apply Role</button>
+    </div>
+  </div>
+</div>
+
+<!-- Activity review modal -->
+<div class="modal-overlay" id="modal-activity">
+  <div class="modal" style="max-width:500px">
+    <h3 class="modal-title" id="activity-title">Activity Review</h3>
+    <p  class="modal-sub"   id="activity-sub">Loading…</p>
+    <div class="activity-grid" id="activity-stats"></div>
+    <div class="activity-info" id="activity-info"></div>
+    <div class="modal-actions">
+      <button class="btn-modal cancel" onclick="closeModal('modal-activity')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-wrap"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
+<script>
+const API = 'http://localhost:8080/api';
+let authToken  = '';
+let currentPage = 0;
+let totalPages  = 1;
+let searchTimer = null;
+let pendingAction  = null;
+let pendingUserId  = null;
+let filterBarOpen  = false;
+let analyticsInterval = null;
+
+// ── Init ──────────────────────────────────────────────────
+(function init() {
+  authToken = localStorage.getItem('ng_token');
+  if (!authToken) { window.location.href = 'index.html'; return; }
+
+  // Guard: only admins
+  const role = localStorage.getItem('ng_role');
+  if (role !== 'admin') { window.location.href = 'index.html'; return; }
+
+  // Set avatar initials
+  const alias = localStorage.getItem('ng_alias') || 'A';
+  document.getElementById('nav-avatar').textContent = alias.charAt(0).toUpperCase();
+
+  // Load data
+  loadAnalytics();
+  loadMembers();
+  updateLiveTime();
+
+  // Auto-refresh analytics every 30s
+  analyticsInterval = setInterval(loadAnalytics, 30000);
+  setInterval(updateLiveTime, 1000);
+
+  // Search debounce
+  document.getElementById('member-search').addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      currentPage = 0;
+      loadMembers();
+    }, 380);
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.actions-wrap')) {
+      document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+  });
+
+  document.getElementById('view-all-link').addEventListener('click', () => {
+    currentPage = 0;
+    document.getElementById('member-search').value = '';
+    document.getElementById('filter-role').value   = '';
+    document.getElementById('filter-status').value = '';
+    loadMembers();
+  });
+})();
+
+// ── Live clock ────────────────────────────────────────────
+function updateLiveTime() {
+  const now = new Date();
+  document.getElementById('live-time').textContent =
+    now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+}
+
+// ── Fetch helper ──────────────────────────────────────────
+async function apiFetch(path, options = {}) {
+  const res = await fetch(API + path, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + authToken,
+      ...(options.headers || {})
+    }
+  });
+  const json = await res.json();
+  if (!res.ok || !json.success) throw new Error(json.message || 'Request failed');
+  return json.data;
+}
+
+// ── Analytics ─────────────────────────────────────────────
+async function loadAnalytics() {
+  try {
+    const data = await apiFetch('/admin/dashboard/analytics');
+    renderStats(data);
+    renderEmergency(data.emergencyMonitoring || []);
+    renderFlaggedItems();
+  } catch (err) {
+    console.error('Analytics error:', err);
+  }
+}
+
+function renderStats(data) {
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128100;</div>
+        <span class="stat-change">+4%</span>
+      </div>
+      <div class="stat-value">${Number(data.activeSoulsCount).toLocaleString()}</div>
+      <div class="stat-label">Active Souls</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128119;</div>
+        <span class="stat-badge ${statusClass(data.volunteersStatus)}">${capitalise(data.volunteersStatus)}</span>
+      </div>
+      <div class="stat-value">${Number(data.volunteersOnlineCount).toLocaleString()}</div>
+      <div class="stat-label">Volunteers Online</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-icon">&#128172;</div>
+        <span class="stat-badge ${data.conversationsStatus === 'active' ? 'active' : 'amber'}">${capitalise(data.conversationsStatus)}</span>
+      </div>
+      <div class="stat-value">${Number(data.activeConversationsCount).toLocaleString()}</div>
+      <div class="stat-label">Active Conversations</div>
+    </div>
+  `;
+}
+
+function statusClass(s) {
+  if (s === 'stable') return 'stable';
+  if (s === 'low' || s === 'critical') return 'amber';
+  return 'stable';
+}
+
+function renderEmergency(flags) {
+  const grid = document.getElementById('emergency-grid');
+  if (!flags.length) {
+    grid.innerHTML = `<div class="stat-card" style="grid-column:1/-1"><div class="empty-state"><div class="icon">&#10003;</div>No open emergency flags</div></div>`;
+    return;
+  }
+  grid.innerHTML = flags.map(f => {
+    const riskClass = f.riskLevel === 'high' ? 'high' : f.riskLevel === 'medium' ? 'medium' : 'low';
+    const initials  = (f.alias || 'AN').substring(0,2).toUpperCase();
+    return `
+      <div class="emergency-card risk-${riskClass}">
+        <div class="emergency-card-top">
+          <div class="emergency-user">
+            <div class="emergency-avatar">${initials}</div>
+            <span class="emergency-alias">${escHtml(f.alias || 'Anonymous')}</span>
+          </div>
+          <span class="risk-badge ${riskClass}">${capitalise(f.riskLevel)} Risk</span>
+        </div>
+        <p class="emergency-content">"${escHtml(f.flaggedContent)}"</p>
+        <div class="emergency-actions">
+          <button class="btn-sm primary" onclick="viewMember('${f.userId}')">View more now</button>
+          <button class="btn-sm" onclick="assignGuide('${f.flagId}')">Assign Guide</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Flagged Items (static demo data matching design) ──────
+function renderFlaggedItems() {
+  const items = [
+    { tag:'HARASSMENT', time:'2hr ago', desc:'Direct message reported in "Grief Circle"' },
+    { tag:'CONTENT AI', time:'46m ago', desc:'Poem flagged for "Depersonalization" levels' },
+    { tag:'BOT WARNING', time:'1h ago', desc:'Mass connection attempts from IP 182.16.x.x' },
+    { tag:'INACTIVITY',  time:'3h ago', desc:'Volunteer "Sarah K" silent for 40 minutes' }
+  ];
+  document.getElementById('flagged-list').innerHTML = items.map(i => `
+    <div class="flagged-item">
+      <div class="flagged-tag">
+        <span>${i.tag}</span>
+        <span class="time">${i.time}</span>
+      </div>
+      <p class="flagged-desc">${i.desc}</p>
+      <div class="flagged-actions">
+        <button class="flagged-btn">Keep</button>
+        <button class="flagged-btn remove">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Community Members ─────────────────────────────────────
+async function loadMembers() {
+  const search  = document.getElementById('member-search').value.trim();
+  const role    = document.getElementById('filter-role').value;
+  const active  = document.getElementById('filter-status').value;
+  const sortBy  = document.getElementById('filter-sort').value;
+
+  let url = `/admin/community/members?page=${currentPage}&size=5&sortBy=${sortBy}&sortDir=desc`;
+  if (search) url += `&search=${encodeURIComponent(search)}`;
+  if (role)   url += `&role=${role}`;
+  if (active !== '') url += `&active=${active}`;
+
+  // Show skeleton
+  document.getElementById('members-tbody').innerHTML = `
+    <tr><td colspan="5">
+      <div style="padding:8px 0">
+        ${[0,1,2].map(() => `<div class="skeleton" style="width:100%;height:34px;border-radius:6px;margin-bottom:6px"></div>`).join('')}
+      </div>
+    </td></tr>`;
+  document.getElementById('pg-info').textContent = 'Loading…';
+
+  try {
+    const data = await apiFetch(url);
+    totalPages = data.totalPages || 1;
+    renderMembersTable(data.content || []);
+    renderPagination(data.totalElements, data.currentPage, data.totalPages);
+    document.getElementById('view-all-link').textContent =
+      `View all ${Number(data.totalElements).toLocaleString()} members`;
+  } catch (err) {
+    document.getElementById('members-tbody').innerHTML =
+      `<tr><td colspan="5"><div class="empty-state"><div class="icon">&#9888;</div>Failed to load members</div></td></tr>`;
+    toast('Failed to load members: ' + err.message, 'error');
+  }
+}
+
+function renderMembersTable(members) {
+  if (!members.length) {
+    document.getElementById('members-tbody').innerHTML =
+      `<tr><td colspan="5"><div class="empty-state"><div class="icon">&#128100;</div>No members found</div></td></tr>`;
+    return;
+  }
+
+  const avatarColors = ['#2a4a36','#2a3a4a','#3a2a4a','#4a3a2a','#2a4a4a'];
+
+  document.getElementById('members-tbody').innerHTML = members.map((m, i) => {
+    const initials   = (m.alias || m.email || 'AN').substring(0,2).toUpperCase();
+    const bgColor    = avatarColors[i % avatarColors.length];
+    const joined     = m.joinedAt ? formatDate(m.joinedAt) : '—';
+    const statusKey  = (m.status || 'Away').toLowerCase();
+    const roleLower  = (m.role || 'user').toLowerCase();
+
+    return `
+      <tr>
+        <td>
+          <div class="member-cell">
+            <div class="member-avatar" style="background:${bgColor}">${initials}</div>
+            <span class="member-name">${escHtml(m.alias || m.email.split('@')[0])}</span>
+          </div>
+        </td>
+        <td><span class="role-pill ${roleLower}">${capitalise(m.role)}</span></td>
+        <td>
+          <div class="status-cell">
+            <span class="sdot ${statusKey}"></span>
+            ${escHtml(m.status)}
+          </div>
+        </td>
+        <td><span class="joined-date">${joined}</span></td>
+        <td>
+          <div class="actions-wrap">
+            <button class="actions-btn" onclick="toggleDropdown('dd-${m.userId}', event)">···</button>
+            <div class="dropdown" id="dd-${m.userId}">
+              <div class="dd-item" onclick="openActivity('${m.userId}')">&#128269; Review Activity</div>
+              <div class="dd-item" onclick="openAdjustRole('${m.userId}', '${m.role}')">&#128260; Adjust Role</div>
+              ${m.role !== 'volunteer'
+                ? `<div class="dd-item" onclick="confirmAction('make-volunteer','${m.userId}','Make ${escHtml(m.alias||'user')} a Volunteer?','This will grant volunteer access and create a volunteer profile.')">&#11014; Make Volunteer</div>`
+                : `<div class="dd-item" onclick="confirmAction('remove-volunteer','${m.userId}','Remove Volunteer Role?','This will demote ${escHtml(m.alias||'user')} back to a regular user.')">&#11015; Remove Volunteer</div>`
+              }
+              <div class="dd-divider"></div>
+              <div class="dd-item danger" onclick="confirmAction('delete','${m.userId}','Delete this user?','This will permanently remove ${escHtml(m.alias||'user')} and all their data. This cannot be undone.')">&#128465; Delete User</div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderPagination(total, page, pages) {
+  document.getElementById('pg-info').textContent =
+    `${total.toLocaleString()} members · Page ${page + 1} of ${pages}`;
+
+  const btns = document.getElementById('pg-btns');
+  btns.innerHTML = '';
+
+  // Prev
+  const prev = btn('‹', page === 0);
+  prev.addEventListener('click', () => { if (currentPage > 0) { currentPage--; loadMembers(); } });
+  btns.appendChild(prev);
+
+  // Page numbers (show max 5)
+  const start = Math.max(0, page - 2);
+  const end   = Math.min(pages - 1, start + 4);
+  for (let p = start; p <= end; p++) {
+    const b = btn(p + 1, false, p === page);
+    const pp = p;
+    b.addEventListener('click', () => { currentPage = pp; loadMembers(); });
+    btns.appendChild(b);
+  }
+
+  // Next
+  const next = btn('›', page >= pages - 1);
+  next.addEventListener('click', () => { if (currentPage < totalPages - 1) { currentPage++; loadMembers(); } });
+  btns.appendChild(next);
+}
+
+function btn(label, disabled, active = false) {
+  const b = document.createElement('button');
+  b.className  = 'pg-btn' + (active ? ' active' : '');
+  b.textContent = label;
+  b.disabled   = disabled;
+  return b;
+}
+
+// ── Dropdown toggle ───────────────────────────────────────
+function toggleDropdown(id, e) {
+  e.stopPropagation();
+  document.querySelectorAll('.dropdown.open').forEach(d => {
+    if (d.id !== id) d.classList.remove('open');
+  });
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── Filter bar ────────────────────────────────────────────
+function toggleFilterBar() {
+  filterBarOpen = !filterBarOpen;
+  document.getElementById('filter-bar').classList.toggle('open', filterBarOpen);
+}
+function applyFilters() { currentPage = 0; loadMembers(); }
+function clearFilters() {
+  document.getElementById('filter-role').value   = '';
+  document.getElementById('filter-status').value = '';
+  document.getElementById('filter-sort').value   = 'created_at';
+  currentPage = 0;
+  loadMembers();
+}
+
+// ── Confirm action modal ──────────────────────────────────
+function confirmAction(action, userId, title, body) {
+  document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  pendingAction = action;
+  pendingUserId = userId;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').textContent  = body;
+
+  const confirmBtn = document.getElementById('modal-confirm-btn');
+  confirmBtn.className = 'btn-modal ' + (action === 'delete' ? 'danger-confirm' : 'confirm');
+  confirmBtn.textContent = action === 'delete' ? 'Delete' : 'Confirm';
+  confirmBtn.onclick = executeAction;
+
+  openModal('modal-confirm');
+}
+
+async function executeAction() {
+  closeModal('modal-confirm');
+  const action = pendingAction;
+  const userId = pendingUserId;
+  if (!action || !userId) return;
+
+  try {
+    let endpoint, method;
+    if (action === 'make-volunteer')   { endpoint = `/admin/community/members/${userId}/make-volunteer`;   method = 'POST';   }
+    else if (action === 'remove-volunteer') { endpoint = `/admin/community/members/${userId}/remove-volunteer`; method = 'POST';   }
+    else if (action === 'delete')      { endpoint = `/admin/community/members/${userId}`;                  method = 'DELETE'; }
+
+    await apiFetch(endpoint, { method });
+    toast(
+      action === 'delete'           ? 'User deleted successfully.'       :
+      action === 'make-volunteer'   ? 'User promoted to volunteer.'      :
+                                      'Volunteer role removed.',
+      'success'
+    );
+    loadMembers();
+    if (action !== 'delete') loadAnalytics();
+  } catch (err) {
+    toast(err.message, 'error');
+  }
+}
+
+// ── Adjust role modal ─────────────────────────────────────
+let adjustRoleUserId = null;
+function openAdjustRole(userId, currentRole) {
+  document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  adjustRoleUserId = userId;
+  document.getElementById('role-select').value = currentRole || 'user';
+  openModal('modal-role');
+}
+async function confirmAdjustRole() {
+  const newRole = document.getElementById('role-select').value;
+  closeModal('modal-role');
+  try {
+    await apiFetch(`/admin/community/members/${adjustRoleUserId}/role`, {
+      method: 'PATCH',
+      body: JSON.stringify({ role: newRole })
+    });
+    toast(`Role updated to ${capitalise(newRole)}.`, 'success');
+    loadMembers();
+    loadAnalytics();
+  } catch (err) {
+    toast(err.message, 'error');
+  }
+}
+
+// ── Activity review modal ─────────────────────────────────
+async function openActivity(userId) {
+  document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  document.getElementById('activity-title').textContent = 'Activity Review';
+  document.getElementById('activity-sub').textContent   = 'Loading…';
+  document.getElementById('activity-stats').innerHTML   = '';
+  document.getElementById('activity-info').innerHTML    = '';
+  openModal('modal-activity');
+
+  try {
+    const d = await apiFetch(`/admin/community/members/${userId}/activity`);
+    document.getElementById('activity-title').textContent = escHtml(d.alias || d.email);
+    document.getElementById('activity-sub').textContent   = escHtml(d.email);
+
+    document.getElementById('activity-stats').innerHTML = `
+      <div class="activity-stat">
+        <div class="activity-stat-val">${d.totalConversations ?? 0}</div>
+        <div class="activity-stat-lbl">Conversations</div>
+      </div>
+      <div class="activity-stat">
+        <div class="activity-stat-val">${d.totalReflections ?? 0}</div>
+        <div class="activity-stat-lbl">Reflections</div>
+      </div>
+      <div class="activity-stat">
+        <div class="activity-stat-val">${d.totalBreatheSessions ?? 0}</div>
+        <div class="activity-stat-lbl">Breathe Sessions</div>
+      </div>
+      <div class="activity-stat">
+        <div class="activity-stat-val">${d.activeConversationCount ?? 0}</div>
+        <div class="activity-stat-lbl">Active Now</div>
+      </div>
+    `;
+
+    document.getElementById('activity-info').innerHTML = `
+      <div class="activity-row"><span class="activity-row-lbl">Role</span>       <span class="activity-row-val">${capitalise(d.role)}</span></div>
+      <div class="activity-row"><span class="activity-row-lbl">Status</span>     <span class="activity-row-val">${escHtml(d.status)}</span></div>
+      <div class="activity-row"><span class="activity-row-lbl">Joined</span>     <span class="activity-row-val">${formatDate(d.joinedAt)}</span></div>
+      <div class="activity-row"><span class="activity-row-lbl">Last Login</span> <span class="activity-row-val">${d.lastLoginAt ? formatDate(d.lastLoginAt) : 'Never'}</span></div>
+      ${d.currentMood ? `<div class="activity-row"><span class="activity-row-lbl">Mood</span><span class="activity-row-val">${escHtml(d.currentMood)}</span></div>` : ''}
+    `;
+  } catch (err) {
+    document.getElementById('activity-sub').textContent = 'Failed to load activity data.';
+    toast(err.message, 'error');
+  }
+}
+
+// ── Emergency helpers ─────────────────────────────────────
+function viewMember(userId) { if (userId) openActivity(userId); }
+function assignGuide(flagId) { toast('Guide assignment feature coming soon.', 'success'); }
+
+// ── Modal helpers ─────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ── Toast ─────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const el = document.createElement('div');
+  el.className   = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-wrap').appendChild(el);
+  setTimeout(() => el.remove(), 3800);
+}
+
+// ── Auth ──────────────────────────────────────────────────
+async function signOut() {
+  try {
+    await apiFetch('/auth/signout', { method: 'POST' });
+  } catch (_) {}
+  localStorage.clear();
+  window.location.href = 'index.html';
+}
+
+function navTo(page) {
+  toast(`Navigating to ${capitalise(page)}…`, 'success');
+}
+
+// ── Utilities ─────────────────────────────────────────────
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function capitalise(s) {
+  if (!s) return '';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function formatDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month:'short', year:'numeric' });
+  } catch { return iso; }
+}
+</script>
+</body>
+</html>
