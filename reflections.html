@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negeyachin - Reflections</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/reflections.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-left">
+        <h1>Negeyachin</h1>
+    </div>
+    <div class="nav-center">
+        <a href="reflections.html" class="active">Reflections</a>
+        <a href="profile.html">Profile</a>
+    </div>
+    <div class="nav-right">
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+</nav>
+
+<main class="reflections-container">
+    <header class="page-header">
+        <h1>Quiet Reflections</h1>
+        <p>A space for shared stillness.</p>
+    </header>
+
+    <div class="reflections-grid" id="reflectionsGrid">
+        <!-- Reflection cards will be inserted here -->
+    </div>
+
+    <div class="create-reflection-area">
+        <button class="btn-primary" id="createReflectionBtn">+ Share a Thought</button>
+    </div>
+
+    <!-- Create Reflection Modal -->
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <h2>Share Your Reflection</h2>
+            <textarea id="reflectionContent" placeholder="What's on your mind?"></textarea>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelModal">Cancel</button>
+                <button class="btn-primary" id="submitReflection">Post</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/reflections.js"></script>
+</body>
+</html>
