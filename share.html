@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negeyachin - Share Reflection</title>
+    <link rel="stylesheet" href="css/reflections.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link"><a href="home.html">Home</a></button>
+        <button class="nav-link">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link"><a href="chat.html">GroupChat</a></button>
+        <button class="nav-link active">
+          <a href="share.html">Share your thought</a>
+        </button>
+        <button class="nav-link">
+          <a href="profile.html">Profile</a>
+        </button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+
+    <main class="reflections-container">
+      <div class="compose-container">
+        <header class="page-header">
+          <h1>Share Your Reflection</h1>
+          <p>Pour your thoughts into a space of understanding.</p>
+        </header>
+
+        <div class="compose-card">
+          <textarea
+            id="reflectionContent"
+            placeholder="What's on your mind? Be authentic, be still..."
+          ></textarea>
+          <div class="compose-actions">
+            <button class="btn-primary" id="submitReflectionBtn">
+              Post Reflection
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/share.js"></script>
+  </body>
+</html>

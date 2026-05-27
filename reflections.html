@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negeyachin - Reflections</title>
+    <link rel="stylesheet" href="css/reflections.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link active">
+          <a href="reflections.html">Reflections</a>
+        </button>
+        <button class="nav-link">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link"><a href="profile.html">Profile</a></button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+
+    <main class="reflections-container">
+      <header class="page-header">
+        <h1>Quiet Reflections</h1>
+        <p>A space for shared stillness.</p>
+      </header>
+
+      <div class="reflections-grid" id="reflectionsGrid"></div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/reflections.js"></script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InnerLink — Workspace Chat Console</title>
+    <link rel="stylesheet" href="css/unified_chat.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link"><a href="home.html">Home</a></button>
+        <button class="nav-link active">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link"><a href="chat.html">GroupChat</a></button>
+        <button class="nav-link">
+          <a href="share.html">Share your thought</a>
+        </button>
+        <button class="nav-link"><a href="profile.html">Profile</a></button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="system-lbl">Chat Connection</span>
+          <h1 id="profileDisplay">Calm Reflection</h1>
+        </div>
+
+        <nav class="navigation-group">
+          <span class="group-title">Here With You</span>
+          <ul class="conversation-list" id="channelsContainer">
+            <div class="empty-state">Scanning conversation records...</div>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="chat-area">
+        <div class="conversation-view" id="messageContainer">
+          <div class="center-notice">
+            Choose an active dialogue thread item from the navigation deck
+            layout panel.
+          </div>
+        </div>
+
+        <footer class="input-rack">
+          <form id="messageForm" class="input-container">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="Speak your mind to the sanctuary..."
+              autocomplete="off"
+              disabled
+              required
+            />
+            <button
+              type="submit"
+              class="send-btn"
+              id="sendBtn"
+              disabled
+              aria-label="Send message context"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+              </svg>
+            </button>
+          </form>
+          <div class="footer-disclaimer">
+            This is your safe space. Take your time.
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="js/unified_chat.js"></script>
+  </body>
+</html>
