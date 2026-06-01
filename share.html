@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Negeyachin - Reflections</title>
+    <title>Negeyachin - Share Reflection</title>
     <link rel="stylesheet" href="css/reflections.css" />
   </head>
   <body>
@@ -29,15 +29,26 @@
     </nav>
 
     <main class="reflections-container">
-      <header class="page-header">
-        <h1>Quiet Reflections</h1>
-        <p>A space for shared stillness.</p>
-      </header>
+      <div class="compose-container">
+        <header class="page-header">
+          <h1>Share Your Reflection</h1>
+          <p>Pour your thoughts into a space of understanding.</p>
+        </header>
 
-      <div class="reflections-grid" id="reflectionsGrid"></div>
+        <div class="compose-card">
+          <textarea
+            id="reflectionContent"
+            placeholder="What's on your mind? Be authentic, be still..."
+          ></textarea>
+          <div class="compose-actions">
+            <button type="button" id="cancelComposeBtn" class="btn-ghost">Cancel</button>
+            <button type="button" class="btn-primary" id="submitReflectionBtn">Post Reflection</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="js/api.js"></script>
-    <script src="js/reflections.js"></script>
+    <script src="js/share.js"></script>
   </body>
 </html>

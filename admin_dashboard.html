@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negeyachin — Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin_dashboard.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link active"><a href="admin_dashboard.html">Dashboard</a></button>
+        <button class="nav-link"><a href="profile.html">Profile</a></button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════════════ -->
+    <main class="main">
+      <!-- Page header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">System Overview</h1>
+          <p class="page-sub">Real-time status of the Solace ecosystem.</p>
+        </div>
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          LIVE UPDATES · <span id="live-time">--:-- --</span>
+        </div>
+      </div>
+
+      <!-- ── Stat Cards ──────────────────────────────────────── -->
+      <div class="stats-grid" id="stats-grid">
+        <!-- Skeleton -->
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon">&#128100;</div>
+            <div
+              class="skeleton"
+              style="width: 40px; height: 18px; border-radius: 999px"
+            ></div>
+          </div>
+          <div
+            class="skeleton"
+            style="width: 80px; height: 34px; margin-bottom: 8px"
+          ></div>
+          <div class="skeleton" style="width: 90px; height: 10px"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon">&#128119;</div>
+            <div
+              class="skeleton"
+              style="width: 52px; height: 18px; border-radius: 999px"
+            ></div>
+          </div>
+          <div
+            class="skeleton"
+            style="width: 60px; height: 34px; margin-bottom: 8px"
+          ></div>
+          <div class="skeleton" style="width: 110px; height: 10px"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon">&#128172;</div>
+            <div
+              class="skeleton"
+              style="width: 46px; height: 18px; border-radius: 999px"
+            ></div>
+          </div>
+          <div
+            class="skeleton"
+            style="width: 70px; height: 34px; margin-bottom: 8px"
+          ></div>
+          <div class="skeleton" style="width: 120px; height: 10px"></div>
+        </div>
+      </div>
+
+      <!-- ── Emergency Monitoring ───────────────────────────── -->
+      <div class="section-heading">
+        Emergency Monitoring
+        <span class="dot-red"></span>
+      </div>
+      <div class="emergency-grid" id="emergency-grid">
+        <div class="stat-card">
+          <div
+            class="skeleton"
+            style="width: 100%; height: 90px; border-radius: 8px"
+          ></div>
+        </div>
+        <div class="stat-card">
+          <div
+            class="skeleton"
+            style="width: 100%; height: 90px; border-radius: 8px"
+          ></div>
+        </div>
+      </div>
+
+      <!-- ── Bottom Grid ─────────────────────────────────────── -->
+      <div class="bottom-grid">
+        <!-- Flagged Items -->
+        <div class="flagged-panel">
+          <div class="panel-header">
+            <span class="panel-title">Flagged Items</span>
+          </div>
+          <div class="flagged-list" id="flagged-list">
+            <div class="flagged-item">
+              <div
+                class="skeleton"
+                style="width: 70%; height: 10px; margin-bottom: 8px"
+              ></div>
+              <div
+                class="skeleton"
+                style="width: 90%; height: 32px; border-radius: 6px"
+              ></div>
+            </div>
+            <div class="flagged-item">
+              <div
+                class="skeleton"
+                style="width: 60%; height: 10px; margin-bottom: 8px"
+              ></div>
+              <div
+                class="skeleton"
+                style="width: 85%; height: 32px; border-radius: 6px"
+              ></div>
+            </div>
+            <div class="flagged-item">
+              <div
+                class="skeleton"
+                style="width: 75%; height: 10px; margin-bottom: 8px"
+              ></div>
+              <div
+                class="skeleton"
+                style="width: 88%; height: 32px; border-radius: 6px"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community Members -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Community Members</span>
+            <div class="panel-controls">
+              <div class="search-box">
+                <span class="search-icon">&#128269;</span>
+                <input
+                  type="text"
+                  id="member-search"
+                  placeholder="Search members..."
+                />
+              </div>
+              <div
+                class="filter-btn"
+                id="filter-toggle-btn"
+                title="Filter"
+                onclick="toggleFilterBar()"
+              >
+                &#9776;
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter bar -->
+          <div class="filter-bar" id="filter-bar">
+            <select
+              class="filter-select"
+              id="filter-role"
+              onchange="applyFilters()"
+            >
+              <option value="">All Roles</option>
+              <option value="user">User</option>
+              <option value="volunteer">Volunteer</option>
+              <option value="admin">Admin</option>
+            </select>
+            <select
+              class="filter-select"
+              id="filter-status"
+              onchange="applyFilters()"
+            >
+              <option value="">All Status</option>
+              <option value="true">Active</option>
+              <option value="false">Suspended</option>
+            </select>
+            <select
+              class="filter-select"
+              id="filter-sort"
+              onchange="applyFilters()"
+            >
+              <option value="created_at">Joined Date</option>
+              <option value="email">Email</option>
+              <option value="role">Role</option>
+              <option value="last_login_at">Last Login</option>
+            </select>
+            <span class="filter-clear" onclick="clearFilters()"
+              >Clear filters</span
+            >
+          </div>
+
+          <!-- Table -->
+          <div id="members-table-wrap">
+            <table class="members-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="members-tbody">
+                <tr>
+                  <td colspan="5">
+                    <div style="padding: 16px 0">
+                      <div
+                        class="skeleton"
+                        style="
+                          width: 100%;
+                          height: 36px;
+                          border-radius: 6px;
+                          margin-bottom: 8px;
+                        "
+                      ></div>
+                      <div
+                        class="skeleton"
+                        style="
+                          width: 100%;
+                          height: 36px;
+                          border-radius: 6px;
+                          margin-bottom: 8px;
+                        "
+                      ></div>
+                      <div
+                        class="skeleton"
+                        style="width: 100%; height: 36px; border-radius: 6px"
+                      ></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination" id="pagination">
+            <span class="pagination-info" id="pg-info">Loading…</span>
+            <div class="pagination-btns" id="pg-btns"></div>
+          </div>
+
+          <span class="view-all-link" id="view-all-link">View all members</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- ══════════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════════ -->
+
+    <!-- Confirm action modal -->
+    <div class="modal-overlay" id="modal-confirm">
+      <div class="modal">
+        <h3 class="modal-title" id="modal-title">Confirm Action</h3>
+        <p class="modal-sub" id="modal-body">Are you sure?</p>
+        <div class="modal-actions">
+          <button
+            class="btn-modal cancel"
+            onclick="closeModal('modal-confirm')"
+          >
+            Cancel
+          </button>
+          <button class="btn-modal confirm" id="modal-confirm-btn">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adjust role modal -->
+    <div class="modal-overlay" id="modal-role">
+      <div class="modal">
+        <h3 class="modal-title">Adjust Role</h3>
+        <p class="modal-sub">Select a new role for this member.</p>
+        <select class="modal-select" id="role-select">
+          <option value="user">User (Soul)</option>
+          <option value="volunteer">Volunteer (Guide)</option>
+          <option value="admin">Admin</option>
+        </select>
+        <div class="modal-actions">
+          <button class="btn-modal cancel" onclick="closeModal('modal-role')">
+            Cancel
+          </button>
+          <button class="btn-modal confirm" onclick="confirmAdjustRole()">
+            Apply Role
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity review modal -->
+    <div class="modal-overlay" id="modal-activity">
+      <div class="modal" style="max-width: 500px">
+        <h3 class="modal-title" id="activity-title">Activity Review</h3>
+        <p class="modal-sub" id="activity-sub">Loading…</p>
+        <div class="activity-grid" id="activity-stats"></div>
+        <div class="activity-info" id="activity-info"></div>
+        <div class="modal-actions">
+          <button
+            class="btn-modal cancel"
+            onclick="closeModal('modal-activity')"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toast-wrap"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
+    <script src="js/admin_dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Connection — Negeyachin</title>
+    <link rel="stylesheet" href="css/chat.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link"><a href="home.html">Home</a></button>
+        <button class="nav-link">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link active">
+          <a href="chat.html">GroupChat</a>
+        </button>
+        <button class="nav-link">
+          <a href="share.html">Share your thought</a>
+        </button>
+        <button class="nav-link"><a href="profile.html">Profile</a></button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="brand">
+          <h1>Chat Connection</h1>
+          <h2 class="app-subtitle" id="chatTitle">Group Sanctuary</h2>
+        </div>
+
+        <nav class="navigation-group">
+          <span class="group-title">Here With You</span>
+          <ul class="conversation-list">
+            <li class="active" id="tabBreathe">
+              <div class="conv-details">
+                <strong>Group Sanctuary</strong>
+                <p>Shared mood community spaces</p>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="chat-area">
+        <header class="chat-header">
+          <div class="action-tabs">
+            <span class="status-indicator-text" id="connectionState"
+              >Initializing setup...</span
+            >
+          </div>
+          <div class="system-actions">
+            <button class="icon-btn" aria-label="Notifications">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9m-13.73 21a2 2 0 0 0 3.46 0"
+                ></path>
+              </svg>
+            </button>
+            <button class="icon-btn" aria-label="Settings">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="conversation-view" id="messageContainer">
+          <div class="date-divider">Today</div>
+        </div>
+
+        <div class="feedback-row" id="typingStatus" style="display: none">
+          <span class="dots"><span>•</span><span>•</span><span>•</span></span>
+          Listening...
+        </div>
+
+        <footer class="input-rack">
+          <form id="messageForm" class="input-container">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="Speak your mind to the sanctuary..."
+              autocomplete="off"
+              required
+            />
+            <button
+              type="submit"
+              class="send-btn"
+              id="sendBtn"
+              aria-label="Send Message"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+              </svg>
+            </button>
+          </form>
+          <p class="safe-space-declaration">
+            This is your safe space. Take your time.
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/chat.js"></script>
+  </body>
+</html>

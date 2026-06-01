@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negeyachin - Your Sanctuary</title>
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link"><a href="home.html">Home</a></button>
+        <button class="nav-link">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link"><a href="chat.html">GroupChat</a></button>
+        <button class="nav-link">
+          <a href="share.html">Share your thought</a>
+        </button>
+        <button class="nav-link active">
+          <a href="profile.html">Profile</a>
+        </button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+    <main class="profile-container">
+      <header class="page-header">
+        <h1>Your Sanctuary</h1>
+        <p>
+          Configure your private space. These settings are stored with
+          end-to-end encryption, visible only to you.
+        </p>
+      </header>
+
+      <!-- Anonymous Identity -->
+      <section class="settings-section">
+        <div class="section-title">
+          <span class="section-icon">👤</span>
+          <h2>Anonymous Identity</h2>
+        </div>
+        <div class="settings-card">
+          <div class="profile-avatar-area">
+            <div class="avatar-circle">
+              <span id="avatarLetter">S</span>
+            </div>
+            <div class="alias-field">
+              <label>CURRENT ALIAS</label>
+              <input type="text" id="aliasInput" value="Silent Observer" />
+            </div>
+          </div>
+
+          <div class="mood-area">
+            <label>CURRENT MOOD</label>
+            <div class="mood-buttons" id="moodButtons">
+              <button class="mood-btn active" data-mood="Meditative">
+                Meditative
+              </button>
+              <button class="mood-btn" data-mood="Curious">Curious</button>
+              <button class="mood-btn" data-mood="Restless">Restless</button>
+              <button class="mood-btn" data-mood="Grateful">Grateful</button>
+            </div>
+          </div>
+
+          <div class="affinity-area">
+            <label>AFFINITIES</label>
+            <div class="affinity-tags">
+              <span class="tag"
+                >Digital Stillness <span class="tag-close">×</span></span
+              >
+              <span class="tag"
+                >Ambient Soundscapes <span class="tag-close">×</span></span
+              >
+              <span class="tag">Poetry <span class="tag-close">×</span></span>
+              <button class="add-tag-btn">+ Add Affinity</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy & Flow -->
+      <section class="settings-section">
+        <div class="section-title">
+          <h2>Privacy & Flow</h2>
+        </div>
+        <div class="settings-card">
+          <div class="toggle-row">
+            <div class="toggle-text">
+              <h3>Anonymous Posting</h3>
+              <p>Always default to your phantom identity when sharing.</p>
+            </div>
+            <div class="toggle-switch" id="anonymousToggle">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-text">
+              <h3>Presence Visibility</h3>
+              <p>Let others know when you are currently reflecting.</p>
+            </div>
+            <div class="toggle-switch" id="presenceToggle">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Sanctuary -->
+      <section class="settings-section">
+        <div class="section-title">
+          <span class="section-icon">🔒</span>
+          <h2>Account Sanctuary</h2>
+        </div>
+        <div class="settings-card">
+          <div class="danger-row">
+            <div class="danger-text">
+              <h3>Logout from Sanctuary</h3>
+              <p>
+                You have to login again in order to talk to the
+                psychologist(volunteers).
+              </p>
+            </div>
+            <button class="btn-danger" onclick="signOut()">Logout</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn-ghost" id="discardBtn">Discard Changes</button>
+        <button class="btn-primary" id="saveBtn">Save Sanctuary</button>
+      </div>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
+</html>

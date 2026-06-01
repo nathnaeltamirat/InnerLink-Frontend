@@ -1,0 +1,362 @@
+@import url('base.css');
+
+.app-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+}
+
+.sidebar {
+  width: 320px;
+  background-color: #181818;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #242424;
+}
+
+.brand {
+  padding: 32px 24px 24px 24px;
+}
+
+.system-lbl {
+  font-size: 14px;
+  color: #757575;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.brand h1 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.navigation-group {
+  flex: 1;
+  padding: 12px 16px;
+  overflow-y: auto;
+}
+
+.group-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #757575;
+  letter-spacing: 1.2px;
+  display: block;
+  margin-bottom: 16px;
+  padding-left: 12px;
+  font-weight: 500;
+}
+
+.conversation-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.conversation-list li {
+  padding: 18px 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: #1e1e1e;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.conversation-list li.room-support {
+  border-left: 4px solid #00bfa5;
+  background-color: #1a2422;
+}
+
+.conversation-list li.room-group {
+  border-left: 4px solid #4a5568;
+  background-color: #1c1d1f;
+}
+
+.conversation-list li:hover {
+  transform: translateY(-1px);
+  background-color: #252629;
+}
+
+.conversation-list li.room-support:hover {
+  background-color: #202d2a;
+}
+
+.conversation-list li.active.room-support {
+  background-color: #253b37 !important;
+  border-color: #00bfa5;
+  box-shadow: 0 4px 12px rgba(0, 191, 165, 0.15);
+}
+
+.conversation-list li.active.room-group {
+  background-color: #2b303b !important;
+  border-color: #718096;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.conv-meta-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.room-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.room-support .room-badge {
+  background-color: rgba(0, 191, 165, 0.15);
+  color: #14f7d4;
+}
+
+.room-group .room-badge {
+  background-color: rgba(113, 128, 150, 0.2);
+  color: #cbd5e0;
+}
+
+.conv-details strong {
+  display: block;
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.conv-details p {
+  font-size: 12.5px;
+  color: #9e9e9e;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+}
+
+.chat-header {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1c1c1c;
+}
+
+.status-indicator-text {
+  font-size: 14px;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.state-offline {
+  color: #8a8a8a;
+}
+
+.state-pending {
+  color: #e67e22;
+}
+
+.state-online {
+  color: #2ecc71;
+}
+
+.header-controls {
+  display: flex;
+  gap: 16px;
+}
+
+.conversation-view {
+  flex: 1;
+  padding: 24px 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.center-notice,
+.empty-state {
+  text-align: center;
+  font-size: 13px;
+  color: #555555;
+  margin: auto;
+}
+
+.time-divider {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.time-divider span {
+  background-color: #1a1a1a;
+  color: #757575;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.message-wrapper.outgoing {
+  align-self: flex-end;
+}
+
+.message-wrapper.incoming {
+  align-self: flex-start;
+}
+
+.bubble {
+  padding: 12px 20px;
+  border-radius: 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.outgoing .bubble {
+  background-color: #242424;
+  color: #ffffff;
+}
+
+.incoming .bubble {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #242424;
+}
+
+.input-rack {
+  padding: 24px 40px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: center;
+}
+
+#userInput {
+  width: 100%;
+  padding: 16px 64px 16px 28px;
+  border: none;
+  border-radius: 28px;
+  font-size: 15px;
+  outline: none;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+#userInput::placeholder {
+  color: #555555;
+}
+
+#userInput:focus:not(:disabled) {
+  background-color: #202020;
+}
+
+#userInput:disabled {
+  background-color: #141414;
+  cursor: not-allowed;
+}
+
+.send-btn {
+  position: absolute;
+  right: 8px;
+  background-color: #ffffff;
+  color: #121212;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.send-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.send-btn:disabled {
+  background-color: #242424;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.footer-disclaimer {
+  font-size: 12px;
+  color: #555555;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.sidebar-chat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.user-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #242424;
+}
+
+.user-avatar-initials {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #333;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.room-support .user-avatar-initials {
+  background-color: #004d40;
+  color: #14f7d4;
+  border-color: rgba(0, 191, 165, 0.3);
+}
+
+.room-group .user-avatar-initials {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.conv-details {
+  flex: 1;
+  min-width: 0;
+}

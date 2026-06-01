@@ -1,51 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negeyachin home  page</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Negeyachin</h1>
-            <button id="logoutBtn">Logout</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Negeyachin — Your Sanctuary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/home.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="nav-brand">Negeyachin</span>
+      <div class="nav-links">
+        <button class="nav-link active"><a href="home.html">Home</a></button>
+        <button class="nav-link">
+          <a href="unified_chat.html">Talk</a>
+        </button>
+        <button class="nav-link"><a href="chat.html">GroupChat</a></button>
+        <button class="nav-link">
+          <a href="share.html">Share your thought</a>
+        </button>
+        <button class="nav-link"><a href="profile.html">Profile</a></button>
+      </div>
+      <div class="nav-right">
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
+        <div class="nav-avatar" id="nav-avatar">A</div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <p class="hero-eyebrow">Digital Sanctuary</p>
+      <h1 class="hero-title">
+        You are <span>not alone</span><br />in this space.
+      </h1>
+      <p class="hero-sub">
+        A quiet corner for reflection, connection, and presence. Take your time.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" id="talk">Talk to people →</button>
+        <button class="btn-ghost" id="reflect">Explore quietly</button>
+      </div>
+    </section>
+
+    <div class="section">
+      <!-- Greeting -->
+      <div class="greeting-card">
+        <div class="greeting-text">
+          <h2>Welcome back, <span id="user-alias">friend</span>.</h2>
+          <p>Your sanctuary is ready. Someone is always here.</p>
         </div>
-        
-        <div id="userInfo" class="user-info">
-            <div class="avatar"></div>
-            <div>
-                <h2 id="userName">Loading...</h2>
-                <p id="userRole">Loading...</p>
-            </div>
+        <div class="greeting-badge">
+          <span class="gdot"></span>
+          Sanctuary active
         </div>
-        
-        <div class="status-box">
-            <h3>Connected to Backend</h3>
-            <p>backend is running and database is connected!</p>
+      </div>
+
+      <!-- Daily quote -->
+      <div class="quote-block">
+        <p class="quote-text">
+          "The quieter you become, the more you are able to hear."
+        </p>
+        <p class="quote-author">— Rumi</p>
+      </div>
+
+      <!-- Feature cards -->
+      <p class="section-title">Your space</p>
+      <div class="cards-grid">
+        <div class="feature-card" id="chat_grid">
+          <div class="feature-icon">&#128172;</div>
+          <h3 class="feature-title">Group Chat</h3>
+          <p class="feature-desc">
+            Connect with a group online to talk anonymously through secure
+            messages, active only for your tab. You don’t have to carry this
+            alone
+          </p>
         </div>
-        
-        <div class="features">
-            <div class="feature">
-                <p>User: <span id="userAlias">-</span></p>
-            </div>
-            <div class="feature">  
-                <p>Email: <span id="userEmail">-</span></p>
-            </div>
-            <div class="feature">
-                <p>Role: <span id="userRoleDisplay">-</span></p>
-            </div>
+        <div class="feature-card" id="volunteer_chat">
+          <div class="feature-icon">&#127807;</div>
+          <h3 class="feature-title">Volunteer Talk</h3>
+          <p class="feature-desc">
+            Check If volunteer is available and talk in a secured environment
+          </p>
         </div>
-        
-        <div class="api-test">
-            <h3>Test API Calls</h3>
-            <button id="testReflections">Load Reflections</button>
-            <div id="reflectionsResult"></div>
+        <div class="feature-card" id="reflect_grid">
+          <div class="feature-icon">&#128214;</div>
+          <h3 class="feature-title">Reflect</h3>
+          <p class="feature-desc">
+            Write freely in your private journal. Your thoughts, kept safely and
+            anonymously only volunteers can talk to you anonymously.
+          </p>
         </div>
+
+      </div>
+
+      <div class="section" id="my-reflections-section" style="display:none;">
+        <p class="section-title">My Reflections</p>
+        <div id="myReflectionsGrid" class="cards-grid"></div>
+      </div>
+
     </div>
-    
-<!--    <script src="js/api.js"></script>-->
-<!--    <script src="js/main.js"></script>-->
-</body>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
+  </body>
 </html>
