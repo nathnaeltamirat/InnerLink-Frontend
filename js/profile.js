@@ -44,15 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const alias = document.getElementById("aliasInput").value;
     const mood =
       document.querySelector(".mood-btn.active")?.dataset.mood || "Meditative";
-    const isAnonymous = document
-      .getElementById("anonymousToggle")
-      .classList.contains("active");
+   
 
-    // Save to localStorage
+ 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     user.alias = alias;
     user.currentMood = mood;
-    user.isAnonymous = isAnonymous;
     localStorage.setItem("user", JSON.stringify(user));
 
     alert("Settings saved!");

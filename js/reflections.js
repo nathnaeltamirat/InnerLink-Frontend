@@ -160,11 +160,16 @@ function timeAgo(dateString) {
 }
 
 function setupLogout() {
-  document
-      .getElementById("logoutBtn")
-      .addEventListener("click", async function () {
-        await window.api.logout();
-      });
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (!logoutBtn) {
+    console.warn("Logout button not found in DOM");
+    return;
+  }
+
+  logoutBtn.addEventListener("click", async function () {
+    await window.api.logout();
+  });
 }
 
 function esc(str) {
