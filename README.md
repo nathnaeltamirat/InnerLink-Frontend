@@ -31,15 +31,7 @@ Main pages in this folder:
 - `js/main.js` handles shared login/home behavior.
 - `js/home.js`, `js/profile.js`, `js/reflections.js`, `js/share.js`, `js/chat.js`, `js/unified_chat.js`, and `js/admin_dashboard.js` power the page-specific UI.
 
-## Backend Connection
 
-The shared API base is configured in `js/api.js` as:
-
-```javascript
-const API_BASE = "http://localhost:8888/api";
-```
-
-If the backend runs on a different host or port, update that value.
 
 ## Run
 
